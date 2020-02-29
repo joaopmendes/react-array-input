@@ -21,18 +21,18 @@ const ArrayInput = ({ array, onValueChange, children, ...props }) => {
     onValueChange(newValues)
   }
 
-  return array.map((values, index) =>
-  <React.Fragment>
-    {children({
-      key: index,
-      index: index,
-      values,
-      selfDestroy: _removeByIndex(index),
-      onValuesChange: onValueChangeByIndex(index),
-      ...props
-    })
-  )}
-  </React.Fragment>
+  return array.map((values, index) => <React.Fragment>
+    {
+      children({
+        key: index,
+        index: index,
+        values,
+        selfDestroy: _removeByIndex(index),
+        onValuesChange: onValueChangeByIndex(index),
+        ...props
+      })
+    }
+  </React.Fragment>)
 }
 
 export default ArrayInput
