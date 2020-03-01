@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 /**
  * Component that handles the changes on an array
  * For each object inside array prop this component will 
@@ -19,20 +19,24 @@ const ArrayInput = ({ array, onValueChange, children, ...props }) => {
     const newValues = [...array]
     newValues.splice(index, 1)
     onValueChange(newValues)
-  }
+  } 
 
-  return array.map((values, index) => <React.Fragment>
+  return <React.Fragment>
     {
-      children({
+      array.map((values, index) => children({
         key: index,
         index: index,
         values,
         selfDestroy: _removeByIndex(index),
         onValuesChange: onValueChangeByIndex(index),
         ...props
-      })
+      }))
     }
-  </React.Fragment>)
+  </React.Fragment>
 }
-
+ArrayInput.propTypes = {
+  array: PropTypes.array.isRequired,
+  onValueChange: PropTypes.func.isRequired,
+  children: PropTypes.element.children.isRequired
+}
 export default ArrayInput

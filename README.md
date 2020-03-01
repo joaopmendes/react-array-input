@@ -25,7 +25,7 @@ import {MDBInput, MDBContainer, MDBBtn} from "mdbreact";
 
 export default class App extends Component {
   state = {
-    array: [
+    personsArray: [
       {name: '', age: null},
       {name: '', age: null},
     ]
@@ -33,8 +33,8 @@ export default class App extends Component {
   render () {
     return (
       <MDBContainer style={{width: "50%"}}>
-        <pre>{JSON.stringify(this.state.array)}</pre>
-        <ArrayInput array={this.state.array} onValueChange={(values) => this.setState({array: values})}>
+        <pre>{JSON.stringify(this.state.personsArray)}</pre>
+        <ArrayInput array={this.state.personsArray} onValueChange={(values) => this.setState({personsArray: values})}>
           {
             (props) => <Person {...props}/>
           }
@@ -86,8 +86,26 @@ class Person extends Component {
   }
 }
 
-
 ```
+## Example Explained with some usefull tips
+The component recieves a array of data ( in the example that would be the personsArray) and an onValueChange that recieves the same array with the updated values.
+
+With that array, the component will render as many children as the length of the array passed thru props 
+( in the example it will be rendered 2 Person Components because the personArray only as 2 objects).
+For each children rendered it will have passed some props:
+  - values: the values that this component should use, for example the first Person component will have the value of    personArray[0];
+  - onValuesChange: a function that you pass the values updated, for example if you recieve {name: 'teste', age: 18}
+    and you need to update the age to 19 you should call this function with {name: 'teste', age: 19}.
+    I do recommend to only call this function on onBlur events, to not have performance issues.
+  - index - the index of that object in the original array.
+  - selfDestroy - a function that when called, removes that object completly from the array.
+
+This Person object is just an example of how this could be done. How you do it is completly up to you.
+
+The logic to add and remove objects is up to you, because inside the ArrayInput I cannot know your logic to add a object or remove it.
+
+You can pass aditional props to ArrayInput, that props will be redirected to each children
+
 
 ## License
 
